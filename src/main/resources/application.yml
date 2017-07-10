@@ -1,0 +1,3 @@
+springfox:
+ title: FINT test provider
+ version: '@version@'

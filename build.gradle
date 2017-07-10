@@ -1,0 +1,57 @@
+buildscript {
+    apply from: 'https://raw.githubusercontent.com/FINTprosjektet/fint-buildscripts/v1.0.14/dependencies.gradle'
+    ext {
+        springBootVersion = springBootVersion
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+apply from: 'https://raw.githubusercontent.com/FINTlibs/fint-buildscripts/v1.0.14/version.gradle'
+jar {
+    version = createVersion()
+    baseName = 'fint-test-provider'
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+    maven {
+        url  "http://dl.bintray.com/fint/maven"
+    }
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+afterEvaluate {
+    configure(processResources) {
+        filesMatching('**/*.yml') {
+            filter(ReplaceTokens, tokens: [version: jar.version])
+        }
+    }
+}
+
+dependencies {
+    compile('no.fint:fint-sse:0.0.10')
+    compile('no.fint:fint-event-model:0.0.27')
+
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile("com.github.springfox.loader:springfox-loader:${springfoxLoaderVersion}")
+    compileOnly('org.projectlombok:lombok')
+
+    testCompile('cglib:cglib-nodep:3.2.5')
+    testCompile("org.spockframework:spock-spring:${spockSpringVersion}")
+    testCompile("org.spockframework:spock-core:${spockSpringVersion}")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = gradleVersion
+}
