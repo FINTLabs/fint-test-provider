@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
 import java.util.Map;
@@ -56,7 +57,7 @@ public class EventController {
             }
         }
 
-        if(receivedEvent == null) {
+        if (receivedEvent == null) {
             log.warn("No response from adapter");
             return null;
         } else {
@@ -66,12 +67,14 @@ public class EventController {
         }
     }
 
+    @ApiIgnore
     @PostMapping("/status")
     public void postStatus(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
                            @RequestBody Event event) {
         log.info("/status called with orgId:{} and event:{}", orgId, event);
     }
 
+    @ApiIgnore
     @PostMapping("/response")
     public void postResponse(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
                              @RequestBody Event event) {
