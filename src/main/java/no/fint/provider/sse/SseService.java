@@ -28,6 +28,7 @@ public class SseService {
     }
 
     public void removeRegisteredClients() {
+        emitters.values().forEach(SseEmitter::complete);
         emitters.clear();
     }
 }
