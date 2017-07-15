@@ -41,6 +41,9 @@ public class EventController {
         clients.values().forEach(emitter -> {
             try {
                 emitter.send(builder);
+            } catch (IllegalStateException e) {
+                log.warn("Emitter closed, trying to reconnect. " + e.getMessage());
+                sseService.removeRegisteredClients();
             } catch (IOException e) {
                 log.error("Unable to send event to SSE client", e);
             }
