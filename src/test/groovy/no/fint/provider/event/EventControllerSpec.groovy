@@ -29,7 +29,7 @@ class EventControllerSpec extends MockMvcSpecification {
 
     def "Send event"() {
         when:
-        def response = mockMvc.perform(post('/event'))
+        def response = mockMvc.perform(post('/event').param('query', 'test123'))
 
         then:
         1 * sseService.getRegisteredClients() >> ['fint.health': new SseEmitter()]

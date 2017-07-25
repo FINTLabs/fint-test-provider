@@ -35,4 +35,13 @@ class SseControllerSpec extends MockMvcSpecification {
                 .andExpect(jsonPathEquals('$[0]', '123'))
     }
 
+    def "Return status OK when deleting registered clients"() {
+        when:
+        def response = mockMvc.perform(delete('/sse/clients'))
+
+        then:
+        1 * sseService.removeRegisteredClients()
+        response.andExpect(status().isOk())
+    }
+
 }
