@@ -1,0 +1,6 @@
+fint:
+ consumer:
+  enabled: true
+ events:
+  orgIds: mock.no
+  queue-endpoint-enabled: true

@@ -1,3 +1,7 @@
+server:
+ port: 8090
+ context-path: '/provider'
+
 springfox:
  title: FINT test provider
  version: '@version@'
@@ -5,6 +9,3 @@ springfox:
 security:
  basic:
   enabled: false
-
-server:
- context-path: '/provider'
